@@ -53,60 +53,12 @@ Blockly.Xml.workspaceToDom = function(workspace, opt_noId) {
   for (var i = 0, comment; comment = comments[i]; i++) {
     xml.appendChild(comment.toXmlWithXY(opt_noId));
   }
-
-  //*****
-  //*****n0xx1 start
-  // var variables = Blockly.Variables.allVariables(workspace);
-  // for (var j = 0, variable; variable = variables[j]; j++)
-  // {
-  //     // variables without types don't need to be written exclusivly
-  //     if (variable.type) {
-  //         var element1 = Blockly.Xml.variableToDom_(variable);
-  //         xml.appendChild(element1);
-  //     }
-  // }
-  //*****
-  //*****n0xx1 end
-
-
   var blocks = workspace.getTopBlocks(true);
   for (var i = 0, block; block = blocks[i]; i++) {
     xml.appendChild(Blockly.Xml.blockToDomWithXY(block, opt_noId));
   }
   return xml;
 };
-
-//*****
-//*****n0xx1 start
-
-// /**
-//  * Create dom element for variable
-//  * @param {!Blockly.Variable} variable The variable to convert.
-//  * @returns {!Element} Tree of XML elements.
-//  */
-// Blockly.Xml.variableToDom_ = function (variable) {
-//   var element = goog.dom.createDom("variable");
-//   element.setAttribute('name', variable.name);
-//   element.setAttribute('type', variable.type);
-//   return element;
-// };
-
-
-// /**
-//  * 
-//  * @param {} element 
-//  * @returns {!Blockly.Variable} 
-//  */
-// Blockly.Xml.domToVariable_ = function(element) {
-//   return {
-//     name: element.getAttribute('name'),
-//     type: element.getAttribute('type')
-//   };
-// };
-
-//*****n0xx1 end
-//*****
-
 
 /**
  * Encode a list of variables as XML.
@@ -191,17 +143,7 @@ Blockly.Xml.fieldToDom_ = function(field) {
     if (field.referencesVariables()) {
       return Blockly.Xml.fieldToDomVariable_(field);
     } else {
-      var container = goog.dom.createDom('field', null, field.getValue()); // original, before n0xx1
-
-//*****
-//*****n0xx1 start
-      // var container = field.toDom
-      // ? field.toDom()
-      // : goog.dom.createDom('field', null, field.getValue());
-
-//*****n0xx1 end
-//*****
-
+      var container = goog.dom.createDom('field', null, field.getValue());
       container.setAttribute('name', field.name);
       return container;
     }
@@ -901,11 +843,7 @@ Blockly.Xml.domToField_ = function(block, fieldName, xml) {
   if (field.referencesVariables()) {
     Blockly.Xml.domToFieldVariable_(workspace, xml, text, field);
   } else {
-    // if (field.fromDom) { //n0xx1
-    // field.fromDom(xmlChild, workspace); //n0xx1
-    // } else { //n0xx1
-    field.setValue(xmlChild.textContent);
-    // } //n0xx1
+    field.setValue(text);
   }
 };
 
