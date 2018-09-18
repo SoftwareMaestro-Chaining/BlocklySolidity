@@ -1,5 +1,6 @@
 # node module
 node_modules/
+node_modules/*
 
 # db info
 db.js
