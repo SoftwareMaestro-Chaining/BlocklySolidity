@@ -21,15 +21,15 @@
   <script src="javascripts/generators/solidity/math.js"></script>
   <script src="javascripts/generators/solidity/oop.js"></script>
   <style>
-    body {
-      background-color: #fff;
-      font-family: sans-serif;
-    }
-    h1 {
-      font-weight: normal;
-      font-size: 140%;
-    }
-  </style>
+  body {
+    background-color: #fff;
+    font-family: sans-serif;
+  }
+  h1 {
+    font-weight: normal;
+    font-size: 140%;
+  }
+</style>
 </head>
 <body>
   <div id="blocklyDiv" style="height: 480px; width: 100%;"></div> //fxed-sized
@@ -84,12 +84,23 @@
 
   <textarea id="textarea" style="width:calc(34% - 10px);height:600px;float:right"></textarea>
 
-  <input type="submit" value="send" onClick = "compile()"/>
+  <input type="submit" value="send" onClick = "compile();"/>
+  <input type="submit" value="select" onClick= "selectUser();"/>
+  <input type="submit" value="run" onClick="run();"/>
 
   <script>
 
     function test() {
       alert('test');
+    }
+
+    function selectUser() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("GET", "http://localhost:3000/ether/", true);
+      xhttp.send();
+
+      xhttp.open("GET", "http://localhost:3000/ether/select", true);
+      xhttp.send();
     }
 
     function compile() {
@@ -100,20 +111,12 @@
       xhttp.send("code=" + code);
     }
 
-    function compile2() {
-      var code = document.getElementById('textarea').value;
-      url = 'http://localhost:3000/ether/compiler';
-
-      var form = document.createElement('form');
-      form.setAttribute('charset','utf-8');
-      form.setAttribute('method', 'post');
-      form.setAttribute('action', url);
-
-      var hiddenField = document.createElement('input');
-      hiddenField.setAttribute('type','hidden');
-      hiddenField.setAttribute('code',code);
-      form.appendChild(hiddenField);
+    function run() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("GET", "http://localhost:3000/ether/test", true);
+      xhttp.send();
     }
+
 
     var blocklyDiv = document.getElementById('blocklyDiv');
     var blocklyArea = document.getElementById('blocklyArea');
@@ -169,9 +172,9 @@
     Blockly.Xml.domToWorkspace(
       Blockly.Xml.textToDom(
         '<xml><block type="contract" deletable="false" movable="false"></block></xml>'
-      ),
+        ),
       workspace
-    );
+      );
     var contractBlock = workspace.getTopBlocks()[0];
 
     function setDisabledRec(block, disabled) {
@@ -205,8 +208,8 @@
 
       document.getElementById('textarea').value = code;
       // console.log("myUpdateFunction");
-     }
-     workspace.addChangeListener(myUpdateFunction);
+    }
+    workspace.addChangeListener(myUpdateFunction);
   </script>
 
 </body>

@@ -170,6 +170,7 @@ UniversalDApp.prototype.createContract = function (data, callback) {
 
 UniversalDApp.prototype.runTx = function (args, cb) {
   const self = this
+  console.log('run tx');
   async.waterfall([
     function getGasLimit (next) {
       if (self.transactionContextAPI.getGasLimit) {
@@ -178,6 +179,7 @@ UniversalDApp.prototype.runTx = function (args, cb) {
       next(null, 3000000)
     },
     function queryValue (gasLimit, next) {
+      console.log('query value');
       if (args.value) {
         return next(null, args.value, gasLimit)
       }
@@ -189,6 +191,7 @@ UniversalDApp.prototype.runTx = function (args, cb) {
       })
     },
     function getAccount (value, gasLimit, next) {
+      console.log('get account');
       if (args.from) {
         return next(null, args.from, value, gasLimit);
       }
@@ -210,6 +213,7 @@ UniversalDApp.prototype.runTx = function (args, cb) {
     },
     function runTransaction (fromAddress, value, gasLimit, next) {
       console.log(args);
+      console.log('run transaction');
       var tx = { to: args.to, data: args.data.dataHex, useCall: args.useCall, from: fromAddress, value: value, gasLimit: gasLimit }
       var payLoad = { funAbi: args.data.funAbi, funArgs: args.data.funArgs, contractBytecode: args.data.contractBytecode, contractName: args.data.contractName }
       var timestamp = Date.now();
@@ -217,9 +221,11 @@ UniversalDApp.prototype.runTx = function (args, cb) {
       // self.event.trigger('initiatingTransaction', [timestamp, tx, payLoad])
       self.txRunner.rawRun(tx,
         (network, tx, gasEstimation, continueTxExecution, cancelCb) => {
+          console.log('rawRun');
           if (network.name !== 'Main') {
             return continueTxExecution(null);
           }
+          console.log('여기까지오면안됨');
           var amount = executionContext.web3().fromWei(typeConversion.toInt(tx.value), 'ether');
           var content = confirmDialog(tx, amount, gasEstimation, self,
             (gasPrice, cb) => {

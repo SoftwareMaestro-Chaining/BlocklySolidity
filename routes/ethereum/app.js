@@ -21,20 +21,19 @@ class App {
 		run.apply(self);
 	}
 
-// 개인 정보
-getAccount() {
-	var self = this;
-	accounts.apply(self);
-}
+	getAccount() {
+		var self = this;
+		accounts.apply(self);
+	}
 
-createAccount() {
-	var self = this;
-	addAccount.apply(self);
-}
+	createAccount() {
+		var self = this;
+		addAccount.apply(self);
+	}
 
-selectAccount() {
+	selectAccount() {
 
-	var web3 = new Web3();
+		var web3 = new Web3();
 		// todo ; select index (account index)
 		// todo ; input value (ether)
 
@@ -58,62 +57,63 @@ selectAccount() {
 		});
 	}
 
- // 컴파일
- runCompiler(code) {
- 	var self = this;
- 	var target = "casino";
- 	var sources = {};
+	runCompiler(code) {
+		var self = this;
+		var target = "casino";
+		var sources = {};
 
- 	var compiler = new Compiler();
- 	registry.put({api: compiler, name: 'compiler'});
+		var compiler = new Compiler();
+		registry.put({api: compiler, name: 'compiler'});
 
- 	var test = new Promise(function(resolve, reject) {
- 		resolve(code);
- 	}).then(content => {
+		var test = new Promise(function(resolve, reject) {
+			resolve(code);
+		}).then(content => {
 
- 		sources = { content };
- 		var t = { 
- 			casino : sources
- 		};
-//			console.log(t);
-//			sources[target] = result ;
-		compiler.compile(t, target);
-	});
- }
+			sources = { content };
+			var t = { 
+				casino : sources
+			};
+			compiler.compile(t, target);
+		});
+	}
 
 
 
- test() {
- 	var self = this;
- 	var compiler = registry.get('compiler').api;
-//		console.log(compiler.lastCompilationResult);
-	var abi = compiler.getContract("Casino").object;
+	test() {
+		var self = this;
+		var compiler = registry.get('compiler').api;
+		console.log('test');
+		//	console.log(compiler.lastCompilationResult);
+		var abi = compiler.getContract("Casino1").object;
+		// console.log(abi);
 
-	var dapp = registry.get('udapp').api;
+		var dapp = registry.get('udapp').api;
 
-	var currentAccount = registry.get('currentAccount').api;
+		// console.log(dapp);
 
-	console.log(dapp.getABI(abi));
+		var currentAccount = registry.get('currentAccount').api;
 
-	self._components = {};
-	self._components.transactionContextAPI = {
-		getAddress: (cb) => {
-			cb(null, currentAccount);
-		},
-		getValue: (cb) => {
-			cb(null, executionContext.web3().toWei('5', 'wei'));
-		},
-		getGasLimit: (cb) => {
-			cb(null, 3000000);
-		}
-	}		
+		// console.log(dapp.getABI(abi));
 
-	dapp.resetAPI(self._components.transactionContextAPI);
+		self._components = {};
+		self._components.transactionContextAPI = {
+			getAddress: (cb) => {
+				cb(null, currentAccount);
+			},
+			getValue: (cb) => {
+				cb(null, executionContext.web3().toWei('5', 'wei'));
+			},
+			getGasLimit: (cb) => {
+				cb(null, 3000000);
+			}
+		}		
 
-	createInstance.apply(self);
-//		console.log(compiler.lastCompilationResult.data.contracts);
-//		console.log(compiler.lastCompilationResult.data.contracts.);
-//		console.log(compiler.lastCompilationResult);
+		dapp.resetAPI(self._components.transactionContextAPI);
+
+		createInstance.apply(self);
+		//	console.log(compiler.lastCompilationResult.data.contracts);
+		//	console.log(compiler.lastCompilationResult.data.contracts.);
+		//	console.log(compiler.lastCompilationResult);
 	}
 
 }
@@ -142,16 +142,19 @@ function createInstance() {
 	//	}
 	var contract = {
 		name: "Casino",
-		contract: compiler.getContract("Casino")
+		contract: compiler.getContract("Casino1")
 	};
 
-	console.log(contract);
 
 	var args = "10,10";
 
 	console.log(args);
 
 	// 여기서 compiler로부터 abi만 추출 받는다.
+	console.log('constructor');
+	console.log('');
+	console.log('');
+	console.log(contract.contract.object.abi);
 	var constructor = txHelper.getConstructorInterface(contract.contract.object.abi);
 	console.log(constructor);
 
@@ -176,6 +179,7 @@ function createInstance() {
 	}, (msg) => {
 		logCallback(msg);
 	}, (data, runTxCallback) => {
+		console.log('data');
 		dapp.runTx(data, runTxCallback);
 	});
 }

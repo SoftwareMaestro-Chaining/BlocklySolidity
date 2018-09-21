@@ -8,10 +8,12 @@ app.init();
 
 router.get('/', function(req, res) {
 	app.getAccount();
+	res.end();
 });
 
 router.get('/addAccount', function(req, res) {
 	app.createAccount();
+	res.end();
 });
 
 router.post('/compiler', function(req, res) {
@@ -23,7 +25,7 @@ router.post('/compiler', function(req, res) {
 
 router.get('/test', function(req, res) {
 	app.test();
-	res.end();
+//	res.end();
 });
 
 router.get('/select', function(req, res) {
