@@ -496,8 +496,8 @@ Blockly.Blocks['controls_for'] = {
     Blockly.Extensions.apply('declare_typed_variable', this, false);
   },
 };
-
-
+//*****start
+//*****n0xx1
 
 Blockly.defineBlocksWithJsonArray([
   {
@@ -526,4 +526,59 @@ Blockly.defineBlocksWithJsonArray([
     "previousStatement": "contract_state"
   }
 ]);
+
+
+Blockly.Blocks['contract_message'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('msg.')
+        .appendField(
+          new Blockly.FieldDropdown([
+            [ "gas", "GAS" ],
+            [ "sender", "SENDER"],
+            [ "data", "DATA" ],
+          ]),
+          "VAR_GLOBAL"
+        );
+
+    this.setColour(195);
+    // this.contextMenu = false;
+
+    // this._stateNameInitialized = false;
+
+    this.getVariableNameSelectField = function() { return this.getField('VAR_GLOBAL'); };
+    this.getVariableLabelGroup = function() { return this.getFieldValue('LABEL_GROUP_VARIABLE') };
+    // this.getVariableScope = function() {
+    //   var scope = this.getParent();
+    //   while (!!scope && scope.type != 'contract') {
+    //     scope = scope.getParent();
+    //   }
+    //   return scope;
+    // };
+
+    this.setOutput(true, null)
+
+    // Blockly.Extensions.apply('declare_typed_variable', this, false);
+  },
+};
+
+// Blockly.Blocks['contract_state_get'] = {
+//   init: function() {
+//     this.appendDummyInput()
+//       .appendField(
+//         new Blockly.FieldDropdown([
+//           ["select state...", Blockly.Solidity.UNDEFINED_NAME],
+//         ]),
+//         "STATE_NAME"
+//       );
+//     this.setOutput(true, null);
+//     this.setColour(195);
+
+//     this.getVariableNameSelectField = function() { return this.getField('STATE_NAME'); };
+//     this.getVariableLabelGroup = function() { return Blockly.Solidity.LABEL_GROUP_STATE };
+//   }
+// };
+
+//*****n0xx1
+//*****end
 

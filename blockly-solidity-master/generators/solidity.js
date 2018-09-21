@@ -21,6 +21,7 @@ Blockly.Solidity.LABEL_GROUP_VARIABLE   = "variable";
 Blockly.Solidity.LABEL_GROUP_METHOD     = "method";
 Blockly.Solidity.UNDEFINED_NAME         = "__UNDEFINED__";
 
+
 /**
  * List of illegal variable names.
  * This is not intended to be a security feature.  Blockly is 100% client-side,

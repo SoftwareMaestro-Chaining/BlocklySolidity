@@ -39,10 +39,9 @@ Blockly.Solidity['contract_state'] = function(block) {
     'TYPE_INT': '0',
     'TYPE_UINT': '0',
     'TYPE_ADDRESS': '0x0',
-    'TYPE_STRING': 'LoveChaining'
+    'TYPE_STRING': 'ILoveChaining'
   };
 
-  console.log("#######"+value);
 
   if (value === '') {
     value = defaultValue[type];
@@ -82,3 +81,17 @@ Blockly.Solidity['contract_state_set'] = function(block) {
 
   return 'this.' + Blockly.Solidity.getVariableName(variable) + ' = ' + argument0 + ';\n';
 };
+
+
+Blockly.Solidity['contract_message'] = function(block) {
+  var variable = block.getFieldValue('VAR_GLOBAL');
+  var variables = {
+    'GAS' : 'gas',
+    'SENDER' : 'sender',
+    'DATA' : 'data'
+  };
+
+  var code = 'msg.' + variables[variable];
+
+  return  [code, Blockly.Solidity.ORDER_ATOMIC];
+}

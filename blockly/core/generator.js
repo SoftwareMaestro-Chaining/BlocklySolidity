@@ -230,6 +230,7 @@ Blockly.Generator.prototype.valueToCode = function(block, name, outerOrder) {
   }
   var code = tuple[0];
   var innerOrder = tuple[1];
+  console.log("#####"+innerOrder);
   if (isNaN(innerOrder)) {
     throw TypeError('Expecting valid order from value block: ' +
         targetBlock.type);
