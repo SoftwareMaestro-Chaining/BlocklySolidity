@@ -562,22 +562,34 @@ Blockly.Blocks['contract_message'] = {
   },
 };
 
-// Blockly.Blocks['contract_state_get'] = {
-//   init: function() {
-//     this.appendDummyInput()
-//       .appendField(
-//         new Blockly.FieldDropdown([
-//           ["select state...", Blockly.Solidity.UNDEFINED_NAME],
-//         ]),
-//         "STATE_NAME"
-//       );
-//     this.setOutput(true, null);
-//     this.setColour(195);
 
-//     this.getVariableNameSelectField = function() { return this.getField('STATE_NAME'); };
-//     this.getVariableLabelGroup = function() { return Blockly.Solidity.LABEL_GROUP_STATE };
-//   }
-// };
+Blockly.Blocks['contract_revert'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField('revert');
+
+    this.setColour(195);
+    // this.contextMenu = false;
+
+    // this._stateNameInitialized = false;
+    this.getVariableLabelGroup = function() { return this.getFieldValue('LABEL_GROUP_VARIABLE') };
+    // this.getVariableScope = function() {
+    //   var scope = this.getParent();
+    //   while (!!scope && scope.type != 'contract') {
+    //     scope = scope.getParent();
+    //   }
+    //   return scope;
+    // };
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+
+    // Blockly.Extensions.apply('declare_typed_variable', this, false);
+  },
+};
+
+
+
+
 
 //*****n0xx1
 //*****end

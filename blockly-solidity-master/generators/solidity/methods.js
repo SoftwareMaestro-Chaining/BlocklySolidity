@@ -73,13 +73,7 @@ Blockly.Solidity['contract_method_call'] = function(block) {
 
 
 
-Blockly.Solidity['contract_struct'] = function(block) {
-  var states = Blockly.Solidity.statementToCode(block, 'STATES');
-  var code = 'pragma solidity ^0.4.2;\n\n'
-    + 'struct ' + block.getFieldValue('NAME') + ' {\n'
-    + states
-    // + "  function () { throw; }\n"
-    + '}\n';
-    console.log(code);
-  return code;
-};
+
+Blockly.Solidity['contract_revert'] = function(block) {
+  return 'revert(); \n'
+}

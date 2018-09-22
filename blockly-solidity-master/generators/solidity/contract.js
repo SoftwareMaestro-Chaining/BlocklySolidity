@@ -82,6 +82,17 @@ Blockly.Solidity['contract_state_set'] = function(block) {
   return 'this.' + Blockly.Solidity.getVariableName(variable) + ' = ' + argument0 + ';\n';
 };
 
+Blockly.Solidity['contract_struct'] = function(block) {
+  var states = Blockly.Solidity.statementToCode(block, 'STATES');
+  var code = 'pragma solidity ^0.4.2;\n\n'
+    + 'struct ' + block.getFieldValue('NAME') + ' {\n'
+    + states
+    // + "  function () { throw; }\n"
+    + '}\n';
+    console.log(code);
+  return code;
+};
+
 
 Blockly.Solidity['contract_message'] = function(block) {
   var variable = block.getFieldValue('VAR_GLOBAL');
